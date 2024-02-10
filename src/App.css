@@ -1,6 +1,17 @@
+@import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:ital,wght@1,200&family=Roboto:wght@300;400&display=swap');
+
+
 .App {
   text-align: center;
+  font-family: 'Roboto', sans-serif;
+  display: flex;
+  align-items: start;
+  background-color: var(--bg-color);
+  height: 100vh;
+  gap: 1rem;
 }
+
+
 
 .App-logo {
   height: 40vmin;
@@ -27,6 +38,8 @@
 .App-link {
   color: #61dafb;
 }
+
+
 
 @keyframes App-logo-spin {
   from {

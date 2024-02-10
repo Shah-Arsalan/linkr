@@ -1,25 +1,25 @@
-import React from 'react';
-import logo from './logo.svg';
 import './App.css';
+import Sidebar from './Components/Sidebar/Sidebar';
+import SuggestionModal from './Components/SuggestionModal/Suggestionmodal';
+import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
+import { Login } from './Features/Login/Login';
+import Explore from './Features/Explore/Explore';
+import { Signup } from './Features/Signup/Signup';
+
 
 function App() {
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+   
+      <Routes>
+        <Route path="/explore" element={<Explore />} />
+        <Route path="/login" element={<Login />} />
+        <Route path="/signup" element={<Signup />} />
+      </Routes>
+  
+
     </div>
+
   );
 }
 
