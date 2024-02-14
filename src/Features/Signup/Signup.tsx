@@ -1,18 +1,36 @@
 import "./Signup.css";
 import { useState, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
 import { Box, Typography } from "@mui/material";
 import Input from "@mui/joy/Input";
 import { Button } from "@mui/joy";
+import { signupHandler } from "../../ReduxToolkit/AuthenticationSlice";
+import { useDispatch , useSelector } from "react-redux";
+import { AppDispatch } from "../../ReduxToolkit/Store";
+import { Link, useNavigate } from "react-router-dom";
+import { dark } from "@mui/material/styles/createPalette";
+import { initialStateType } from "../../Types/initialStateType";
+import { RootState } from "../../ReduxToolkit/Store";
 
 const Signup = () => {
   const navigate = useNavigate();
+  const dispatch = useDispatch<AppDispatch>()
+  const auth = useSelector((state : RootState)=>state.auth)
+  const isSigned = auth.isSigned;
   const [signupCredentials , setSignupCredentials] = useState({
     email:"",
     firstname:"",
     lastname:"",
-    password:""
+    password:"",
   })
+
+  const handleSignup = () =>{
+      dispatch(signupHandler(signupCredentials))
+  }
+
+
+  useEffect(()=>{
+isSigned && navigate("/login")
+  },[isSigned])
 
   return (
     <>
@@ -95,6 +113,7 @@ const Signup = () => {
                 size="md"
                 variant="outlined"
                 sx={{ width: "100%" }}
+                onChange={(e)=>{setSignupCredentials({...signupCredentials, firstname:e.target.value})}}
               />
             </Box>
             <Box
@@ -111,6 +130,7 @@ const Signup = () => {
                 size="md"
                 variant="outlined"
                 sx={{ width: "100%" }}
+                onChange={(e)=>{setSignupCredentials({...signupCredentials, lastname:e.target.value})}}
               />
             </Box>
             <Box
@@ -127,11 +147,12 @@ const Signup = () => {
                 size="md"
                 variant="outlined"
                 sx={{ width: "100%" }}
+                onChange={(e)=>{setSignupCredentials({...signupCredentials, password:e.target.value})}}
               />
             </Box>
             <Button
               color="primary"
-              onClick={function () {}}
+              onClick={()=>handleSignup()}
               size="md"
               variant="solid"
               sx={{ marginTop: 2, width: "100%" }}
