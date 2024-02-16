@@ -14,8 +14,9 @@ import { RootState } from "../../ReduxToolkit/Store";
 import MoreVertIcon from "@mui/icons-material/MoreVert";
 import FavoriteBorderOutlinedIcon from "@mui/icons-material/FavoriteBorderOutlined";
 import BookmarkAddOutlinedIcon from "@mui/icons-material/BookmarkAddOutlined";
+import { postType } from "../../Types/postType";
 
-const Post = () => {
+const Post = ({ele , setAppear} : {ele : postType , setAppear:  React.Dispatch<React.SetStateAction<boolean>>}) => {
   const { firstname, lastname, user } = useSelector(
     (state: RootState) => state.auth
   );
@@ -31,6 +32,7 @@ const Post = () => {
         background: "white",
         padding: 2,
         borderRadius: 2,
+        marginTop:3
       }}
     >
       <Box
@@ -40,10 +42,10 @@ const Post = () => {
           justifyContent: "space-between",
         }}
       >
-        <Box sx={{ display: "flex", gap: 1, alignItems: "center" }}>
+        <Box sx={{ display: "flex", gap: 1, alignItems: "center"  }}>
           <Avatar alt="Remy Sharp" src="/static/images/avatar/1.jpg" />
           <Typography>
-            {firstname + " " + lastname} <Typography>{user}</Typography>
+            {firstname + " " + lastname} <Typography>{ele.username}</Typography>
           </Typography>
         </Box>
         <IconButton sx={{ width: "fit-content" }}>
@@ -53,7 +55,7 @@ const Post = () => {
       </Box>
       <Box sx={{ marginTop: 1, padding: 0.5 }}>
         <Typography align="left" fontWeight={300}>
-          {content}
+          {ele.content}
         </Typography>
       </Box>
       <Box sx={{ display: "flex", gap: 1, marginTop: 1 }}>

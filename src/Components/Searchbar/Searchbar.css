@@ -1,7 +1,11 @@
 .search-bar{
     display: flex;
     align-items: center;
-    width: 100%
+    width: 100%;
+    position:sticky;
+    top:0;
+    background-color: white;
+
   }
   
 

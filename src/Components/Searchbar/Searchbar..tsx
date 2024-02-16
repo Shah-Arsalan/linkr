@@ -1,22 +1,28 @@
 import "./Searchbar.css";
-import { TextField, Stack, Autocomplete, IconButton } from "@mui/material";
+import { TextField, Stack, Autocomplete, IconButton, InputAdornment, Button } from "@mui/material";
 import SearchIcon from "@mui/icons-material/Search";
 
 const Searchbar = () => {
   return (
-    <>
-      <div className="search-bar">
-        <IconButton>
-          <SearchIcon className="search-icon" />
-        </IconButton>
-        <TextField
-          fullWidth
-          label="search for a friend"
-          variant="standard"
-          id="fullWidth"
-        />
-      </div>
-    </>
+    <TextField
+    id="outlined-adornment-weight"
+    variant="outlined"
+    InputProps={{
+      startAdornment: (
+        <InputAdornment position="start">
+          <IconButton><SearchIcon/></IconButton>
+        </InputAdornment>
+      ),
+    }}
+
+    placeholder="Search ... "
+    size="small"
+    fullWidth
+
+    sx={{background:"white" , marginTop:2 , position:"sticky" , top:2 , zIndex:100}}
+
+
+  />
   );
 };
 

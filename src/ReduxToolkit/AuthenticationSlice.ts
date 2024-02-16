@@ -9,9 +9,11 @@ import { initialStateType } from '../Types/initialStateType';
 
 const FromLocalStorage = localStorage.getItem("LoginCredentials");
 const token = FromLocalStorage ? JSON.parse(FromLocalStorage).token : null;
-const user = FromLocalStorage ? JSON.parse(FromLocalStorage).email : null;
+const user = FromLocalStorage ? JSON.parse(FromLocalStorage).user : null;
 const firstname = FromLocalStorage ? JSON.parse(FromLocalStorage).firstname : null;
 const lastname = FromLocalStorage ? JSON.parse(FromLocalStorage).lastname : null;
+
+console.log("in auth slice" , token , user , firstname , lastname )
 
 
 const initialState: initialStateType = {

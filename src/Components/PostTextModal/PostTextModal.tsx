@@ -1,25 +1,41 @@
 import { Box, Button, IconButton, TextField } from "@mui/material"
 import ArrowBackIosIcon from '@mui/icons-material/ArrowBackIos';
 import { useState } from "react";
-import { useSelector } from "react-redux";
-import { RootState } from "../../ReduxToolkit/Store";
+import { useDispatch, useSelector } from "react-redux";
+import { AppDispatch, RootState } from "../../ReduxToolkit/Store";
+import { postHandler } from "../../ReduxToolkit/PostSlice";
 
 const PostTextModal = ({ setAppear }: {
     setAppear: React.Dispatch<React.SetStateAction<boolean>>;
   }) => {
 
+    
+  const {token , user} = useSelector((state:RootState) => state.auth)
+  console.log("The user is in modal" , user)
+  const dispatch = useDispatch<AppDispatch>();
+
+    
+
+
     const [post , setPost] = useState({
-      content:"",
+      content:" ",
       likes: {
           likeCount: 0, 
           likedBy: [], 
       },
-      username:"",
+      username: user,
       bookmark:[],
       comments:[]
   })
 
-  const {token} = useSelector((state:RootState) => state.auth)
+
+
+  const handlePost = () =>{
+    setAppear(prev => !prev)
+    dispatch(postHandler({token , post}))
+  }
+
+
 
 
   
@@ -35,7 +51,7 @@ const PostTextModal = ({ setAppear }: {
           placeholder="Type your post here..."
           onChange={(e)=>setPost({...post, content:e.target.value})}
         />
-        <Button variant="contained">Post</Button>
+        <Button variant="contained" onClick={() => handlePost()}>Post</Button>
         </Box>
         </Box>
     )

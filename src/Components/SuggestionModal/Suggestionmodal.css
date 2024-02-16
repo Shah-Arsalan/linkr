@@ -8,9 +8,8 @@
     border-radius: 2rem;
     margin-top: 2rem;
     height: fit-content;
-
-
-
+    position: sticky;
+    top:2rem;
 }
 
 .profile{
@@ -28,5 +27,4 @@
     height: 3rem;
     width: 3rem;
     border-radius: 100%;
-    
 }
