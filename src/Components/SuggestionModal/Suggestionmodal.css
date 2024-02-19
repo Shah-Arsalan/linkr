@@ -19,6 +19,8 @@
     border-top: 1px solid;
     padding: .5rem;
     text-align: left;
+    width: 100%;
+    justify-content: space-between;
 
 }
 
@@ -27,4 +29,9 @@
     height: 3rem;
     width: 3rem;
     border-radius: 100%;
+}
+
+.user-profile{
+    display: flex;
+    gap: 1rem;
 }

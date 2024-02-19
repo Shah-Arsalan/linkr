@@ -16,13 +16,9 @@ import FavoriteBorderOutlinedIcon from "@mui/icons-material/FavoriteBorderOutlin
 import BookmarkAddOutlinedIcon from "@mui/icons-material/BookmarkAddOutlined";
 import { postType } from "../../Types/postType";
 
-const Post = ({ele , setAppear} : {ele : postType , setAppear:  React.Dispatch<React.SetStateAction<boolean>>}) => {
-  const { firstname, lastname, user } = useSelector(
-    (state: RootState) => state.auth
-  );
-  const content =
-    "This is some rubbish content This is some rubbish contentThis is some rubbish contentThis is some rubbish content";
-  console.log("the user is", user);
+const Post = ({ele , setAppear} : {ele : postType , setAppear:  React.Dispatch<React.SetStateAction<boolean>> | null}) => {
+ const {users} = useSelector((state:RootState) => state.user);
+ const currentPostUser = users.find((element) => element.email == ele.username)
   return (
     <Box
       sx={{
@@ -42,11 +38,13 @@ const Post = ({ele , setAppear} : {ele : postType , setAppear:  React.Dispatch<R
           justifyContent: "space-between",
         }}
       >
-        <Box sx={{ display: "flex", gap: 1, alignItems: "center"  }}>
+        <Box sx={{ display: "flex", gap: 1, alignItems: "center" }}>
           <Avatar alt="Remy Sharp" src="/static/images/avatar/1.jpg" />
-          <Typography>
-            {firstname + " " + lastname} <Typography>{ele.username}</Typography>
+
+          <Typography sx={{textAlign:"start"}}>
+            {currentPostUser?.firstname + " " + currentPostUser?.lastname} <Typography>{ele.username}</Typography>
           </Typography>
+
         </Box>
         <IconButton sx={{ width: "fit-content" }}>
           {" "}

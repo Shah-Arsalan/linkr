@@ -15,6 +15,21 @@ type noteThunkArgs = {
 
 type noteReturnValue = any
 
+
+
+const getAllPostsHandler = createAsyncThunk("data/allPosts" , async(_, thunkAPI) => {
+    try{
+
+        const response = await axios.get('http://localhost:3000/posts')
+
+        return {data : response.data}
+
+    }catch(error:any){
+        console.log(error)
+        thunkAPI.rejectWithValue(error)
+    }
+})
+
 const postHandler = createAsyncThunk<noteReturnValue, noteThunkArgs>("data/posts" , async ({token , post}, thunkAPI) => {
     try{
         const response = await axios.post('http://localhost:3000/posts', post , {
@@ -34,11 +49,6 @@ const postHandler = createAsyncThunk<noteReturnValue, noteThunkArgs>("data/posts
 
 
   })
-  
-  
-  
-  
-
 
 
 
@@ -54,9 +64,15 @@ const postSlice = createSlice({
             state.posts = action.payload.data.posts
 
         })
+
+
+        builder.addCase(getAllPostsHandler.fulfilled , (state , action) => {
+            console.log("all posts are" , action.payload?.data.posts)
+            state.posts = action.payload?.data.posts
+        })
     },
 
 })
 
 export default postSlice.reducer;
-export {postHandler}
+export {postHandler ,getAllPostsHandler}

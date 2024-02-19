@@ -16,6 +16,7 @@ const Signup = () => {
   const dispatch = useDispatch<AppDispatch>()
   const auth = useSelector((state : RootState)=>state.auth)
   const isSigned = auth.isSigned;
+  console.log("is signed" , isSigned);
   const [signupCredentials , setSignupCredentials] = useState({
     email:"",
     firstname:"",

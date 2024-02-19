@@ -98,11 +98,15 @@ const authenticationSlice = createSlice({
     name : "authentication",
     initialState, 
      reducers: {
-      logout: (state, action) => {
+      logout: (state) => {
         state.token = "";
         state.user ="";
         localStorage.removeItem("LoginCredentials");
       },
+
+      setSignOut : (state) => {
+        state.isSigned = false;
+      }
     }, 
     extraReducers:(builder) => {
       builder.addCase(signupHandler.fulfilled , (state , action) => {
@@ -116,6 +120,8 @@ const authenticationSlice = createSlice({
         console.log("this is action",action.payload)
         state.token = action.payload.data.token;
         state.user = action.payload.data.email;
+        state.firstname = action.payload.data.firstname;
+        state.lastname = action.payload.data.lastname
         localStorage.setItem(
           "LoginCredentials",
           JSON.stringify({
@@ -132,4 +138,4 @@ const authenticationSlice = createSlice({
 
 export default authenticationSlice.reducer
 export {loginHandler , signupHandler}
-export const {logout} = authenticationSlice.actions
+export const {logout , setSignOut} = authenticationSlice.actions

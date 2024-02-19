@@ -1,21 +1,45 @@
+import { useDispatch, useSelector } from "react-redux"
 import "./Suggestionmodal.css"
+import { AppDispatch, RootState } from "../../ReduxToolkit/Store"
+import { followHandler, getAllUserHandler } from "../../ReduxToolkit/UserSlice"
+import { useEffect } from "react"
 
 const SuggestionModal = () => {
-    const demoarr= [{name : "arslan" , id:"hussain" ,pic:"https://res.cloudinary.com/dgwzpbj4k/image/upload/v1650457790/baatchit/woman_ojbd7v.png"},
-    {name : "arslan" , id:"hussain" ,pic:"https://res.cloudinary.com/dgwzpbj4k/image/upload/v1650457790/baatchit/woman_ojbd7v.png"},
-    {name : "arslan" , id:"hussain" ,pic:"https://res.cloudinary.com/dgwzpbj4k/image/upload/v1650457790/baatchit/woman_ojbd7v.png"}]
+    const dispatch = useDispatch<AppDispatch>();
+    const {users} = useSelector((state : RootState) => state.user)
+    const {user} = useSelector((state:RootState) => state.auth)
+
+    const currentUser = users.filter((ele) => ele.email == user)
+    const followingUsers = currentUser[0]?.following;
+  
+
+    const suggestedUsers = users.filter((ele) => ele.email !== user && followingUsers?.every((email) => email !== ele.email))
+    console.log("the suggested users", suggestedUsers);
+
+    const slicedUsers = suggestedUsers.slice(0 , 4);
+
+    const handleFollow = (email : string) =>{
+        dispatch(followHandler({email , useremail:user}))
+    }
+
+    useEffect(() => {
+        dispatch(getAllUserHandler());
+    },[])
     return (
         <div className="suggestion-outer">
             <p>Suggestions for you</p>
-            {demoarr.map(ele =>{
+            {slicedUsers.map((ele:any) =>{
                 return (
                     <div className="profile">
-                        <img className="profile-pic" src={ele.pic}/>
+                      <div className="user-profile">
+                        <img className="profile-pic" src={"https://res.cloudinary.com/dgwzpbj4k/image/upload/v1650457789/baatchit/customer-service_zpcfrg.png"} alt="profile" />
                         <div className="name-section">
-                            <h5>{ele.name}</h5>
-                            <p>{ele.id}</p>
+                            <h5>{ele.firstname + " "  + ele.lastname}</h5>
+                            <p>{ele.email}</p>
                         </div>
-                        <button className="primary-btn">+ Follow</button>
+                        </div>
+                    
+                        <button className="primary-btn" onClick={()=>handleFollow(ele.email)}>+ Follow</button>
                     </div>
                 )
             })}

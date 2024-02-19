@@ -7,14 +7,28 @@ import PostTextField from "../../Components/PostTextField/PostTextField";
 import { PostTextModal } from "../../Components/PostTextModal/PostTextModal";
 import { useEffect, useState } from "react";
 import { Post } from "../../Components/Post/Post";
-import { useSelector } from "react-redux";
-import { RootState } from "../../ReduxToolkit/Store";
+import { useDispatch, useSelector } from "react-redux";
+import { AppDispatch, RootState } from "../../ReduxToolkit/Store";
+import { getAllPostsHandler } from "../../ReduxToolkit/PostSlice";
+import { getAllUserHandler } from "../../ReduxToolkit/UserSlice";
+
 
 const Feed = () => {
+    const dispatch = useDispatch<AppDispatch>();
     const [appearModal , setAppearModal] = useState(false)
     const {posts} = useSelector((state:RootState) => state.post)
+    console.log("posts in feed" , posts)
     const {user} = useSelector((state:RootState) => state.auth)
-    const currUserPosts = posts.filter((ele ) => ele.username == user)
+    const {users} = useSelector((state:RootState) => state.user)
+    const currentUser = users.filter((ele) => ele.email == user)
+    const following = currentUser[0]?.following
+
+    const currUserPosts = posts?.filter((ele ) => ele.username == user || following?.some(email => email == ele.username) )
+
+    useEffect(()=>{
+        dispatch(getAllPostsHandler());
+        dispatch(getAllUserHandler())
+    },[])
 
 
 

@@ -7,7 +7,7 @@ import { Button } from "@mui/joy";
 import { AppDispatch } from "../../ReduxToolkit/Store";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../../ReduxToolkit/Store";
-import { loginHandler } from "../../ReduxToolkit/AuthenticationSlice";
+import { loginHandler, setSignOut } from "../../ReduxToolkit/AuthenticationSlice";
 
 const Login = () => {
   const navigate = useNavigate();
@@ -23,6 +23,10 @@ const Login = () => {
   useEffect(() => {
     token && navigate("/");
   }, [token]);
+
+  useEffect(()=>{
+    dispatch(setSignOut());
+  },[])
 
   return (
     <>
@@ -126,7 +130,7 @@ const Login = () => {
             </Button>
           </Box>
 
-          <Typography fontWeight={300}>
+          <Typography fontWeight={300} onClick={()=>navigate('/signup')}>
             Don't have an account? Sign up
           </Typography>
         </Box>

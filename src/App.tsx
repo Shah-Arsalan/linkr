@@ -8,6 +8,7 @@ import { Signup } from './Features/Signup/Signup';
 import { PrivateRoute } from './Features/PrivateRoute/PrivateRoute';
 import Feed from './Features/Feed/Feed';
 import { MainContainer } from './Features/MainContainer/MainContainer';
+import { Profile } from './Features/Profile/Profile';
 
 
 function App() {
@@ -27,6 +28,21 @@ function App() {
             </PrivateRoute>
           }
         />
+        <Route path="/explore" element={
+          <PrivateRoute>
+          <MainContainer>
+            <Explore/>
+          </MainContainer>
+          </PrivateRoute>
+        }/>
+
+<Route path="/profile" element={
+          <PrivateRoute>
+          <MainContainer>
+            <Profile/>
+          </MainContainer>
+          </PrivateRoute>
+        }/>
       </Routes>
   
 
