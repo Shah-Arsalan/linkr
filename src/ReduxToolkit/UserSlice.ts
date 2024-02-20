@@ -14,6 +14,12 @@ type followHandlerThunkArgs = {
     useremail : string | null
 }
 
+type updateUserHandlerThunkArgs={
+    bio : String | null , 
+    link : String | null,
+    email:String | null
+}
+
 type followHandlerReturnValue = any;
 
 
@@ -50,6 +56,20 @@ const followHandler = createAsyncThunk<followHandlerReturnValue , followHandlerT
 })
 
 
+const updateUserHandler = createAsyncThunk<any , updateUserHandlerThunkArgs>('user/update', async(args, thunkAPI) => {
+    try{
+        const {bio, link , email} = args;
+        const response = await axios.post('http://localhost:3000/users/updateuser', {bio , link ,email})
+
+        return response.data
+
+
+    }catch(error:any){
+        thunkAPI.rejectWithValue(error);
+    }
+})
+
+
 
 const userSlice = createSlice({
     name:"user",
@@ -69,9 +89,14 @@ const userSlice = createSlice({
             state.users = action.payload.users
         })
 
+
+        builder.addCase(updateUserHandler.fulfilled,(state, action) => {
+            state.users = action.payload.users
+        })
+
     }
 })
 
 
 export default userSlice.reducer;
-export { getAllUserHandler , followHandler}
+export { getAllUserHandler , followHandler , updateUserHandler}

@@ -9,6 +9,7 @@ import { PrivateRoute } from './Features/PrivateRoute/PrivateRoute';
 import Feed from './Features/Feed/Feed';
 import { MainContainer } from './Features/MainContainer/MainContainer';
 import { Profile } from './Features/Profile/Profile';
+import { UserProfile } from './Features/UserProfile/UserProfile';
 
 
 function App() {
@@ -43,6 +44,16 @@ function App() {
           </MainContainer>
           </PrivateRoute>
         }/>
+
+<Route path="/userprofile/:userId" element={
+          <PrivateRoute>
+          <MainContainer>
+            <UserProfile/>
+          </MainContainer>
+          </PrivateRoute>
+        }/>
+
+
       </Routes>
   
 

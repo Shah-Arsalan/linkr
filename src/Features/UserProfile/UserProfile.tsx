@@ -1,31 +1,16 @@
-import { useDispatch, useSelector } from "react-redux";
-import { AppDispatch, RootState } from "../../ReduxToolkit/Store";
-import { Avatar, Box, Button, IconButton, Typography } from "@mui/material";
-import { MoreVert } from "@mui/icons-material";
+import { useSelector } from "react-redux";
+import { useParams } from "react-router-dom"
+import { RootState } from "../../ReduxToolkit/Store";
+import { Avatar, Box, Button, Typography } from "@mui/material";
 import { Post } from "../../Components/Post/Post";
-import { useEffect, useState } from "react";
-import { getAllUserHandler } from "../../ReduxToolkit/UserSlice";
-import { getAllPostsHandler } from "../../ReduxToolkit/PostSlice";
-import { UserDetailsModal } from "../../Components/UserDetailsModal/UserDetailsModal";
 
-const Profile = () => {
-  const dispatch = useDispatch<AppDispatch>();
-  const [appearDetailsModal , setAppearDetailsModal] = useState(false);
-  const { user } = useSelector((state: RootState) => state.auth);
-  const { users } = useSelector((state: RootState) => state.user);
-  const { posts } = useSelector((state: RootState) => state.post);
-
-  const currentUser = users?.find((ele) => ele.email == user);
-  const currentUserPosts = posts.filter((ele) => ele.username == user);
-  console.log("curr user posts in profile", currentUserPosts);
-
-  useEffect(() => {
-    dispatch(getAllUserHandler())
-    dispatch(getAllPostsHandler())
-  }, []);
-
-  return (
-    <>
+const UserProfile = () => {
+    const {userId}  = useParams();
+    const {users} = useSelector((state:RootState) => state.user);
+    const {posts} = useSelector((state:RootState) => state.post)
+    const currentUser = users.find((ele) => ele._id === userId)
+    const currentUserPosts = posts.filter((ele) => ele.username == currentUser?.email)
+    return(<>
       <Box
         sx={{
           display: "flex",
@@ -68,18 +53,14 @@ const Profile = () => {
             </Typography>
           </Box>
         </Box>
-        <Box>
-          <Button onClick={()=>setAppearDetailsModal(prev => !prev)}>Edit</Button>
-        </Box>
       </Box>
 
       {currentUserPosts?.map((ele) => {
         return <Post ele={ele} setAppear={null} />;
       })}
 
-      {appearDetailsModal && <UserDetailsModal setAppear={setAppearDetailsModal} currentUser={currentUser}/>}
-    </>
-  );
-};
+    </>)
+}
 
-export { Profile };
+
+export {UserProfile}

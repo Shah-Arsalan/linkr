@@ -15,8 +15,10 @@ import MoreVertIcon from "@mui/icons-material/MoreVert";
 import FavoriteBorderOutlinedIcon from "@mui/icons-material/FavoriteBorderOutlined";
 import BookmarkAddOutlinedIcon from "@mui/icons-material/BookmarkAddOutlined";
 import { postType } from "../../Types/postType";
+import { useNavigate } from "react-router-dom";
 
 const Post = ({ele , setAppear} : {ele : postType , setAppear:  React.Dispatch<React.SetStateAction<boolean>> | null}) => {
+ const navigate = useNavigate();
  const {users} = useSelector((state:RootState) => state.user);
  const currentPostUser = users.find((element) => element.email == ele.username)
   return (
@@ -38,7 +40,7 @@ const Post = ({ele , setAppear} : {ele : postType , setAppear:  React.Dispatch<R
           justifyContent: "space-between",
         }}
       >
-        <Box sx={{ display: "flex", gap: 1, alignItems: "center" }}>
+        <Box onClick={() => navigate(`/userprofile/${currentPostUser?._id}`)} sx={{ display: "flex", gap: 1, alignItems: "center" }}>
           <Avatar alt="Remy Sharp" src="/static/images/avatar/1.jpg" />
 
           <Typography sx={{textAlign:"start"}}>

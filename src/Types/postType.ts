@@ -5,7 +5,7 @@ export type postType = {
         likeCount : number,
         likedBy: Array<string>
     },
-    username : string | null,
+    username : string | null |undefined,
     bookmark:Array<string>,
     comments: {
         username: string,
